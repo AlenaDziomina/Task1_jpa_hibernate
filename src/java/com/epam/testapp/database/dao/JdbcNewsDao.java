@@ -9,6 +9,7 @@ import com.epam.testapp.database.exception.DaoSqlException;
 import com.epam.testapp.model.News;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import org.apache.log4j.Logger;
 
@@ -27,14 +28,17 @@ public class JdbcNewsDao implements INewsDao{
     private static final String ERROR_CONNECT_RETURN = "Return connection is not done.";
     private IConnectionPool connectionPool;
     private IGenericQuery genericQuery;
-    private final RowMapper rowMapper = (RowMapper) (ResultSet rs) -> {
-        News bean = new News();
-        bean.setId(rs.getInt(DB_NEWS_ID));
-        bean.setTitle(rs.getString(DB_NEWS_TITLE));
-        bean.setDate(rs.getDate(DB_NEWS_DATE));
-        bean.setBrief(rs.getString(DB_NEWS_BRIEF));
-        bean.setContent(rs.getString(DB_NEWS_CONTENT));
-        return bean;
+    private final RowMapper rowMapper = (RowMapper) new RowMapper() {
+
+        public Object mapRow(ResultSet rs) throws SQLException {
+            News bean = new News();
+            bean.setId(rs.getInt(DB_NEWS_ID));
+            bean.setTitle(rs.getString(DB_NEWS_TITLE));
+            bean.setDate(rs.getDate(DB_NEWS_DATE));
+            bean.setBrief(rs.getString(DB_NEWS_BRIEF));
+            bean.setContent(rs.getString(DB_NEWS_CONTENT));
+            return bean;
+        }
     };
         
     @Override

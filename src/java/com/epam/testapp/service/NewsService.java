@@ -4,10 +4,10 @@ import com.epam.testapp.database.dao.INewsDao;
 import com.epam.testapp.database.exception.DaoException;
 import com.epam.testapp.model.News;
 import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
-//@Transactional
+@Transactional
 public class NewsService implements INewsService {
-    //@Autowired
     private INewsDao newsDao;
     
     @Override
@@ -25,6 +25,7 @@ public class NewsService implements INewsService {
     public void remove(List<News> news) throws DaoException {
         getNewsDao().delete(news);
     }
+    
     
     @Override
     public List getList() throws DaoException {

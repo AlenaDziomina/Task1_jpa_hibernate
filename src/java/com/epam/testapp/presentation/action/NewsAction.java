@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.log4j.Logger;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -17,15 +16,16 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.actions.DispatchAction;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class NewsAction extends DispatchAction {
-    private static final Logger LOGGER = Logger.getLogger(NewsAction.class);
     private static final String FORWARD_INDEX = "index";
     private static final String HEADER_REFERER = "Referer";
     private static final String FORWARD_NEWSLIST = "newslist";
     private static final String FORWARD_NEWSEDIT = "newsedit";
     private static final String FORWARD_NEWSVIEW = "newsview";
     
+    @Autowired
     private INewsService newsService;
     
     /**
